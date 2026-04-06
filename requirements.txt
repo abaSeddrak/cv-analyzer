@@ -1,5 +1,5 @@
 # Python version: 3.11.15
 streamlit==1.29.0
 PyPDF2==3.0.1
-Pillow==10.4.0 --only-binary :all:
+Pillow==12.2.0 --only-binary :all:
 python-docx==0.8.12 
