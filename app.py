@@ -19,4 +19,4 @@ if uploaded_file is not None:
         text = ""
         for page in reader.pages:
             text += page.extract_text()
-        st.text_area("CV Content (first 500 chars)", text[:500])
+        st.text_area("CV Content (first 500 chars)", text)
