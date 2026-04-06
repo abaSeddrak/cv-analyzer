@@ -1,6 +1,6 @@
 import streamlit as st
 from PyPDF2 import PdfReader
-import spacy
+
 
 st.title("Upload Your CV")
 
