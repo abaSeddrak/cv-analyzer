@@ -2,6 +2,17 @@ import streamlit as st
 from PyPDF2 import PdfReader
 import re
 import spacy
+from database import SessionLocal
+from models import CV
+# app.py
+from database import SessionLocal, Base
+from database import engine, Base
+from models import CV  # أو cv_data حسب اسم الموديل
+
+Base.metadata.create_all(bind=engine)
+
+db = SessionLocal()
+
 
 st.title("Upload Your CV")
 try:
@@ -62,16 +73,32 @@ if uploaded_file is not None:
         email = extract_email(text)
 
         st.title(email)
+       
 
         doc = nlp(text)
+        first_line = text.split("\n")[0]
+        names = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
+        st.title(first_line)
         cities_list = ["Cairo"]
         for ent in doc.ents:
             if ent.label_ == "GPE" and ent.text[:100] in cities_list:  # Geo-political entity
               st.title(ent.text)
               break
         
+    new_cv = CV(
+    name=first_line,
+    email=email,
+    phone=phone
+    )  
 
-
+    db.add(new_cv)
+  
+    db.commit()
+    db.refresh(new_cv)
+    st.title(new_cv.name + "Names")
+    print(new_cv.name)
+  
+ 
 
 
 
