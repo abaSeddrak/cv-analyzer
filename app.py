@@ -8,7 +8,7 @@ from models import CV
 from database import SessionLocal, Base
 from database import engine, Base
 from models import CV  # أو cv_data حسب اسم الموديل
-
+import requests
 Base.metadata.create_all(bind=engine)
 
 db = SessionLocal()
@@ -90,6 +90,13 @@ if uploaded_file is not None:
     email=email,
     phone=phone
     )  
+
+    payload = {"name": first_line, "email": email, "phone": phone}
+    response = requests.post("https://cv-analyzer-3-6eg0.onrender.com/cvs", json=payload)
+    if response.status_code == 200:
+        st.success("Saved to API!")
+    else:
+        st.error(f"Error: {response.status_code}")
 
     db.add(new_cv)
   
