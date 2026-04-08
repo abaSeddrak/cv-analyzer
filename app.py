@@ -96,7 +96,7 @@ if uploaded_file is not None:
     if response.status_code == 200:
         st.success("Saved to API!")
     else:
-        st.error(f"Error: {response.status_code}")
+        st.error(f"Error: {response.text}")
 
     db.add(new_cv)
   
