@@ -76,6 +76,7 @@ if uploaded_file is not None:
        
 
         doc = nlp(text)
+        city = ""
         first_line = text.split("\n")[0]
         names = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
         st.title(first_line)
@@ -83,15 +84,17 @@ if uploaded_file is not None:
         for ent in doc.ents:
             if ent.label_ == "GPE" and ent.text[:100] in cities_list:  # Geo-political entity
               st.title(ent.text)
+              city = ent.text
               break
         
     new_cv = CV(
     name=first_line,
     email=email,
-    phone=phone
+    phone=phone,
+    city = city
     )  
 
-    payload = {"name": first_line, "email": email, "phone": phone}
+    payload = {"name": first_line, "email": email, "phone": phone, "city": city}
     response = requests.post("https://cv-analyzer-5i6i.onrender.com/cvs", json=payload)
     if response.status_code == 200:
         st.success("Saved to API!")
