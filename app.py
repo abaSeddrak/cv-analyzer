@@ -93,7 +93,9 @@ if uploaded_file is not None:
     phone=phone,
     city = city
     )  
-
+    
+    print("city",city)
+    st.title(city)
     payload = {"name": first_line, "email": email, "phone": phone, "city": city}
     response = requests.post("https://cv-analyzer-5i6i.onrender.com/cvs", json=payload)
     if response.status_code == 200:

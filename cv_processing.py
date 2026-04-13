@@ -33,7 +33,7 @@ def read_cvs(db: Session = Depends(get_db)):
 # POST new CV
 @app.post("/cvs")
 def create_cv(cv: CVCreate, db: Session = Depends(get_db)):
-    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone)
+    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone, city=cv.city)
     db.add(new_cv)
     db.commit()
     db.refresh(new_cv)
