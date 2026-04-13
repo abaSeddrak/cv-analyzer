@@ -92,7 +92,7 @@ if uploaded_file is not None:
     )  
 
     payload = {"name": first_line, "email": email, "phone": phone}
-    response = requests.post("https://cv-analyzer-3-6eg0.onrender.com/cvs", json=payload)
+    response = requests.post("https://cv-analyzer-5i6i.onrender.com/cvs", json=payload)
     if response.status_code == 200:
         st.success("Saved to API!")
     else:
