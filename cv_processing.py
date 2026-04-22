@@ -23,18 +23,20 @@ class CVCreate(BaseModel):
     email: str
     phone: str
     city:str
+    score:str
+    recommendation:str
 
 # GET all CVs
 @app.get("/cvs")
 def read_cvs(db: Session = Depends(get_db)):
     cvs = db.query(CV).all()
-    return [{"id": cv.id, "name": cv.name, "email": cv.email, "phone": cv.phone, "city":cv.city} for cv in cvs]
+    return [{"id": cv.id, "name": cv.name, "email": cv.email, "phone": cv.phone, "city":cv.city, "score":cv.score,"recommendation":cv.recommendation} for cv in cvs]
 
 # POST new CV
 @app.post("/cvs")
 def create_cv(cv: CVCreate, db: Session = Depends(get_db)):
-    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone, city=cv.city)
+    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone, city=cv.city,)
     db.add(new_cv)
     db.commit()
     db.refresh(new_cv)
-    return {"id": new_cv.id, "name": new_cv.name, "email": new_cv.email, "phone": new_cv.phone,"city":cv.city}
+    return {"id": new_cv.id, "name": new_cv.name, "email": new_cv.email, "phone": new_cv.phone,"city":cv.city,"score":cv.score,"recommendation":cv.recommendation}
