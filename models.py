@@ -8,7 +8,6 @@ class CV(Base):
     name = Column(String)
     email = Column(String)
     phone = Column(String)
-    city = Column(String)
-
-    score = Column(Integer)
-    recommendation = Column(String)
+    city = Column(String, nullable=True)
+    score = Column(Integer, nullable=True)
+    recommendation = Column(String, nullable=True)

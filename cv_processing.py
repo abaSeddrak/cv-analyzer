@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from database import SessionLocal, Base, engine
 from models import CV
 from pydantic import BaseModel
+from typing import Optional
+
 
 # لو ما عملتش create tables قبل كده
 Base.metadata.create_all(bind=engine)
@@ -22,9 +24,9 @@ class CVCreate(BaseModel):
     name: str
     email: str
     phone: str
-    city:str
-    score:str
-    recommendation:str
+    city: str | None = None
+    score: int | None = None
+    recommendation: str | None = None
 
 # GET all CVs
 @app.get("/cvs")
@@ -35,7 +37,7 @@ def read_cvs(db: Session = Depends(get_db)):
 # POST new CV
 @app.post("/cvs")
 def create_cv(cv: CVCreate, db: Session = Depends(get_db)):
-    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone, city=cv.city,)
+    new_cv = CV(name=cv.name, email=cv.email, phone=cv.phone, city=cv.city,score=cv.score,recommendation=cv.recommendation)
     db.add(new_cv)
     db.commit()
     db.refresh(new_cv)
